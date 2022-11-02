@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-const Modal = ({ isShowing, hide }) =>
+const Modal = ({ isShowing, hide, details }) =>
   isShowing
     ? ReactDOM.createPortal(
         <React.Fragment>
@@ -25,7 +25,7 @@ const Modal = ({ isShowing, hide }) =>
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-              <p>Munro Modal</p>
+              <h2>{details.name}</h2>
             </div>
           </div>
         </React.Fragment>,

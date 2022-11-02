@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { PlusCircleFill } from "react-bootstrap-icons";
+//import { PlusCircleFill } from "react-bootstrap-icons";
 
 import "./App.css";
 import FilterDropdown from "./components/FilterDropdown";
@@ -13,7 +13,7 @@ export default function App() {
   const { munros, loading, error } = useFetchMunros();
   const [selectedRegion, setSelectedRegion] = useState(null);
   const [heightSelected, setHeightSelected] = useState(false);
-  // const [selectedMunro, setSelectedMunro] = useState(null);
+  const [selectedMunro, setSelectedMunro] = useState(null);
 
   const { isShowing, toggle } = useModal();
 
@@ -40,11 +40,23 @@ export default function App() {
     console.log("called", filteredMunros);
   }
 
-  // const handleClick = (munro) => {
-  //   toggle();
-  //   console.log(munro);
-  // };
+  const showModal = (event) => {
+    const munroID = event.target.value;
+    const temp = munros.filter((ele) => ele.smcid === munroID);
+    setSelectedMunro(temp[0]);
+    toggle();
+  };
 
+  const munroCard = (munroDetails) => (
+    <div key={munroDetails.smcid}>
+      <p>
+        {munroDetails.name}, {munroDetails.height}
+      </p>
+      <button onClick={showModal} value={munroDetails.smcid}>
+        +
+      </button>
+    </div>
+  );
   return (
     <>
       <div className="App">
@@ -55,16 +67,12 @@ export default function App() {
         <HeightCheckbox setHeight={setHeightSelected} height={heightSelected} />
 
         <h2>Munro Challenge</h2>
-        {filteredMunros.map((munro) => (
-          <>
-            <p key={munro.smcid}>
-              {munro.name}, {munro.height}m
-              <PlusCircleFill onClick={toggle} />
-            </p>
-          </>
-        ))}
+
+        {filteredMunros.map((munro) => {
+          return munroCard(munro);
+        })}
       </div>
-      <Modal isShowing={isShowing} hide={toggle} />
+      <Modal isShowing={isShowing} hide={toggle} details={selectedMunro} />
     </>
   );
 }
