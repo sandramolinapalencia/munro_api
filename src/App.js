@@ -13,6 +13,8 @@ export default function App() {
   const { munros, loading, error } = useFetchMunros();
   const [selectedRegion, setSelectedRegion] = useState(null);
   const [heightSelected, setHeightSelected] = useState(false);
+  // const [selectedMunro, setSelectedMunro] = useState(null);
+
   const { isShowing, toggle } = useModal();
 
   let filteredMunros = [];
@@ -37,6 +39,11 @@ export default function App() {
     });
     console.log("called", filteredMunros);
   }
+
+  // const handleClick = (munro) => {
+  //   toggle();
+  //   console.log(munro);
+  // };
 
   return (
     <>

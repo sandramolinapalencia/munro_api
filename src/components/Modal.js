@@ -25,7 +25,7 @@ const Modal = ({ isShowing, hide }) =>
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-              <p>Hello, I'm a modal.</p>
+              <p>Munro Modal</p>
             </div>
           </div>
         </React.Fragment>,
