@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { PlusCircleFill } from "react-bootstrap-icons";
+
 import "./App.css";
 import FilterDropdown from "./components/FilterDropdown";
 import HeightCheckbox from "./components/HeightCheckbox";
@@ -44,6 +46,7 @@ export default function App() {
       {filteredMunros.map((munro) => (
         <p key={munro.smcid}>
           {munro.name}, {munro.height}m
+          <PlusCircleFill />
         </p>
       ))}
     </div>
