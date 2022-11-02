@@ -6,10 +6,15 @@ import FilterDropdown from "./components/FilterDropdown";
 import HeightCheckbox from "./components/HeightCheckbox";
 import useFetchMunros from "./hooks/useFetchMunros";
 
+import Modal from "./components/Modal";
+import useModal from "./hooks/useModal";
+
 export default function App() {
   const { munros, loading, error } = useFetchMunros();
   const [selectedRegion, setSelectedRegion] = useState(null);
   const [heightSelected, setHeightSelected] = useState(false);
+  const { isShowing, toggle } = useModal();
+
   let filteredMunros = [];
 
   if (loading) return <p>loading</p>;
@@ -26,7 +31,6 @@ export default function App() {
       return munro.region === selectedRegion;
     });
   }
-  console.log(heightSelected);
   if (heightSelected) {
     filteredMunros = filteredMunros.filter((munro) => {
       return munro.height > 1000;
@@ -35,20 +39,25 @@ export default function App() {
   }
 
   return (
-    <div className="App">
-      <FilterDropdown
-        allMunros={munros}
-        setSelectedRegion={setSelectedRegion}
-      />
-      <HeightCheckbox setHeight={setHeightSelected} height={heightSelected} />
+    <>
+      <div className="App">
+        <FilterDropdown
+          allMunros={munros}
+          setSelectedRegion={setSelectedRegion}
+        />
+        <HeightCheckbox setHeight={setHeightSelected} height={heightSelected} />
 
-      <h2>Munro Challenge</h2>
-      {filteredMunros.map((munro) => (
-        <p key={munro.smcid}>
-          {munro.name}, {munro.height}m
-          <PlusCircleFill />
-        </p>
-      ))}
-    </div>
+        <h2>Munro Challenge</h2>
+        {filteredMunros.map((munro) => (
+          <>
+            <p key={munro.smcid}>
+              {munro.name}, {munro.height}m
+              <PlusCircleFill onClick={toggle} />
+            </p>
+          </>
+        ))}
+      </div>
+      <Modal isShowing={isShowing} hide={toggle} />
+    </>
   );
 }
